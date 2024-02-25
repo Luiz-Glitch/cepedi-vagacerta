@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "../@types/user";
 
-const API_BASE_URL = "http://192.168.0.112:3000";
+const API_BASE_URL = "http://192.168.2.161:3000";
 
 const getJobs = async () => {
   const response = await axios.get(`${API_BASE_URL}/vagas`);
