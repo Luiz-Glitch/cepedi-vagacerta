@@ -75,7 +75,7 @@ export default function Home() {
         initialRegion={currentLocation}
         onPress={handleMapPress}
       >
-        {marker && <Marker coordinate={marker} />}
+        {marker && <Marker coordinate={marker} onPress={() => navigate("Detail")} />}
       </MapView>
       <Container>
         <Logo />
