@@ -3,6 +3,8 @@ import { useCallback } from "react";
 import { INavigationProps } from "../RootStackParams";
 
 import * as Yup from "yup";
+import api from "../../lib/api";
+import { useMain } from "../../hooks/useMain";
 
 interface FormStructure {
   name: string;
@@ -18,11 +20,12 @@ const ProfileSchema = Yup.object().shape({
 
 export default function useProfile() {
   const { goBack, navigate } = useNavigation<INavigationProps>();
+  const { setUser, user } = useMain()
 
   const initialValues: FormStructure = {
-    name: "",
-    email: "",
-    password: "",
+    name: user.name,
+    email: user.email,
+    password: user.senha,
   };
 
   const handleGoBack = useCallback(() => {
@@ -34,9 +37,20 @@ export default function useProfile() {
   }, [navigator]);
 
   const handleFormSubmit = (values: FormStructure) => {
-    // Implementar a lógica para lidar com a atualização do perfil do usuário
-    console.log("Form values:", values);
-    handleNavigateToHome();
+    const data = { ...user, ...values }
+    
+    setUser(data)
+    api.users.put(user.id, data)
+      .then((status: any) => {
+        if (status === 200) {
+          handleNavigateToHome();
+        } else {
+          console.error('Error updating user data');
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error updating user data', error);
+      });
   };
 
   return {
