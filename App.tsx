@@ -7,13 +7,15 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useCallback } from "react";
-
 import Router from "./src/routes";
+import { usePushNotifications } from "./usePushNotifications";
 import MainProvider from "./src/contexts/main";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const { isLoading } = usePushNotifications();
+
   const fontsLoaded = useFonts({
     Inter_400Regular,
     Inter_700Bold,
@@ -31,7 +33,7 @@ export default function App() {
   return (
     <MainProvider>
       <StatusBar style="auto" />
-      {fontsLoaded && <Router />}
+      {fontsLoaded && !isLoading && <Router />}
     </MainProvider>
   );
 }
