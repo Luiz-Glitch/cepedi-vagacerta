@@ -8,7 +8,8 @@
       "latitude": 37.78825,
       "longitude": -122.4324,
       "salario": 5000,
-      "telefone": "558433512772"
+      "telefone": "558433512772",
+      "novo": false
     },
     {
       "id": "2",
@@ -18,7 +19,8 @@
       "latitude": 37.80025,
       "longitude": -122.4,
       "salario": 6000,
-      "telefone": "558433512772"
+      "telefone": "558433512772",
+      "novo": true
     },
     {
       "id": "3",
@@ -28,7 +30,8 @@
       "latitude": 37.81,
       "longitude": -122.42,
       "salario": 4000,
-      "telefone": "558433512772"
+      "telefone": "558433512772",
+      "novo": false
     }
   ],
   "usuarios": [

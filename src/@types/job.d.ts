@@ -7,4 +7,5 @@ export type Job = {
   longitude: number;
   salario: number;
   telefone: string;
+  novo: boolean;
 };

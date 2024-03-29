@@ -9,11 +9,13 @@ import { Logo } from "../../components/Logo";
 import api from "../../lib/api";
 import { INavigationProps } from "../RootStackParams";
 import { Container, Counter, Info, Wrapper } from "./styles";
+import { usePushNotifications } from "../../../usePushNotifications";
 
 export default function Home() {
   const [currentLocation, setCurrentLocation] = useState<Region>();
   const [jobs, setJobs] = useState<Job[]>([]);
   const { navigate } = useNavigation<INavigationProps>();
+  const { sendPushNotification, expoPushToken } = usePushNotifications();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +50,28 @@ export default function Home() {
     }
 
     fetchData();
-  }, []);
+  }, [jobs]);
+
+  useEffect(() => {
+    if (!expoPushToken) {
+      // Handle scenario where token is undefined
+      console.error("Expo push token is undefined");
+      return;
+    }
+    
+    if (jobs) {
+      const newJobs = jobs.filter(job => job.novo = true)
+      newJobs.forEach(job => {
+        sendPushNotification(
+          "Nova vaga disponível",
+          `Confira a vaga de ${job.titulo}`,
+          expoPushToken.data,
+          job
+        );
+      })
+    }
+    
+  }, [jobs, sendPushNotification, expoPushToken])
 
   const handleGoToProfile = useCallback(() => {
     navigate("Profile");
